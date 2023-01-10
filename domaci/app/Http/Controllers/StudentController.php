@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\StudentResource;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
 {
@@ -40,7 +41,23 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'ime'=>'required|string',
+            'prezime'=>'required|string',
+            'broj_indeksa'=>'required|string',
+        ]);
+
+        if($validator->fails()){
+            return response()->json([$validator->errors()]);
+        }
+
+        $student = Student::create([
+            'ime'=> $request->ime,
+            'prezime'=> $request->prezime,
+            'broj_indeksa'=> $request->broj_indeksa,
+        ]);
+
+        return response()->json(['Student je sacuvan', new StudentResource($student)]);
     }
 
     /**
@@ -74,7 +91,23 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'ime'=>'required|string',
+            'prezime'=>'required|string',
+            'broj_indeksa'=>'required|string',
+        ]);
+
+        if($validator->fails()){
+            return response()->json([$validator->errors()]);
+        }
+
+       $student->ime = $request->ime;
+       $student->prezime = $request->prezime;
+       $student->broj_indeksa = $request->broj_indeksa;
+       
+       $student->save();
+
+       return response()->json(['Student je update-ovan!',new StudentResource($student)]);
     }
 
     /**
@@ -84,7 +117,7 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Student $student)
-    {
-        //
+    {   $student->delete();
+        return response()->json(['Student je obrisan']);
     }
 }
