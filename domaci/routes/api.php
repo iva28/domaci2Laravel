@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PredmetController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\DomaciController;
+use App\Http\Controllers\Api\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::resource('predmet',PredmetController::class);
     Route::resource('student',StudentController::class);
     Route::resource('domaci',DomaciController::class);
+
+    Route::get('/predmet/{id}',[PredmetController::class,'show']);
+    Route::get('/student/{id}',[StudentController::class,'show']);
+    Route::get('/domaci/{id}',[DomaciController::class,'show']);
+
+    Route::post('/register',[AuthController::class,'register']);
