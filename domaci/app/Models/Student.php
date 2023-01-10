@@ -13,7 +13,7 @@ class Student extends Model
     protected $fillable = [
         'ime',
         'prezime',
-        'indeks'
+        'broj_indeksa'
     ];
 
     public function domaci()
