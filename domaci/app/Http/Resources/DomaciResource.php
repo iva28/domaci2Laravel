@@ -14,6 +14,13 @@ class DomaciResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+       return [
+        'id' => $this->resource->id,
+        'opis' => $this->resource->opis,
+        'datum' => $this->resource->datum,
+        'predmet' => new PredmetResource($this->resource->predmet),
+        'student' => new StudentResource($this->resource->student),
+        
+       ];
     }
 }

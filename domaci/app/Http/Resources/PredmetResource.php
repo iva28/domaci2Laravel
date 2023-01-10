@@ -14,6 +14,14 @@ class PredmetResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+        'id'=>$this->resource()->id,
+        'naziv'=>$this->resource()->naziv,
+        'opis'=>$this->resource()->opis,
+        'sef_katedre'=>$this->resource()->sef_katedre,
+        'espb'=>$this->resource()->ESPB,
+
+
+        ];
     }
 }
