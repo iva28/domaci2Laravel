@@ -54,7 +54,7 @@ class PredmetController extends Controller
      */
     public function show(Predmet $predmet)
     {
-        //
+       return new PredmetResource($predmet);
     }
 
     /**

@@ -51,7 +51,7 @@ class DomaciController extends Controller
      */
     public function show(Domaci $domaci)
     {
-        //
+        return new DomaciResource($domaci);
     }
 
     /**
