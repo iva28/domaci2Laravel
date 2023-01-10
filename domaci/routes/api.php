@@ -23,13 +23,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+Route::group(['middleware'=>['auth:sanctum']], function() {
     Route::resource('predmet',PredmetController::class);
     Route::resource('student',StudentController::class);
     Route::resource('domaci',DomaciController::class);
+    Route::post('/logout',[AuthController::class,'logout']);
+});
 
-    Route::get('/predmet/{id}',[PredmetController::class,'show']);
-    Route::get('/student/{id}',[StudentController::class,'show']);
-    Route::get('/domaci/{id}',[DomaciController::class,'show']);
+   
+
+   // Route::get('/predmet/{id}',[PredmetController::class,'show']);
+  //  Route::get('/student/{id}',[StudentController::class,'show']);
+ //   Route::get('/domaci/{id}',[DomaciController::class,'show']);
 
     Route::post('/register',[AuthController::class,'register']);
     Route::post('/login',[AuthController::class,'login']);
