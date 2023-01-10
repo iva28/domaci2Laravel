@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Domaci;
 use App\Http\Resources\DomaciResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DomaciController extends Controller
 {
@@ -39,8 +40,26 @@ class DomaciController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {  
+        $validator = Validator::make($request->all(),[
+        'opis'=>'required|string',
+        'datum'=>'required',
+        'predmet_id'=>'required',
+        'student_id'=>'required',
+    ]);
+
+    if($validator->fails()){
+        return response()->json([$validator->errors()]);
+    }
+
+    $domaci = Domaci::create([
+        'opis'=> $request->opis,
+        'datum'=> $request->datum,
+        'predmet_id'=> $request->predmet_id,
+        'student_id'=> $request->student_id,
+    ]);
+
+    return response()->json(['Domaci je sacuvan', new DomaciResource($domaci)]);
     }
 
     /**
@@ -74,7 +93,25 @@ class DomaciController extends Controller
      */
     public function update(Request $request, Domaci $domaci)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'opis'=>'required|string',
+            'datum'=>'required',
+            'predmet_id'=>'required',
+            'student_id'=>'required',
+        ]);
+    
+        if($validator->fails()){
+            return response()->json([$validator->errors()]);
+        }
+       $domaci->opis = $request->opis;
+       $domaci->datum = $request->datum;
+       $domaci->predmet_id = $request->predmet_id;
+       $domaci->student_id = $request->student_id;
+       
+       $domaci->save();
+
+       return response()->json(['Domaci je update-ovan!',new DomaciResource($domaci)]);
+
     }
 
     /**
@@ -84,7 +121,7 @@ class DomaciController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Domaci $domaci)
-    {
-        //
+    {  $domaci->delete();
+        return response()->json(['Domaci je obrisan']);
     }
 }
