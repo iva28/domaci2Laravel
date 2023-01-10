@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Predmet;
 use App\Http\Resources\PredmetResource;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 
 
 class PredmetController extends Controller
@@ -43,7 +43,25 @@ class PredmetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'naziv'=>'required|string',
+            'opis'=>'required|string',
+            'sef_katedre'=>'required|string',
+            'ESPB'=>'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json([$validator->errors()]);
+        }
+
+        $predmet = Predmet::create([
+            'naziv'=> $request->naziv,
+            'opis'=> $request->opis,
+            'sef_katedre'=> $request->sef_katedre,
+            'ESPB'=> $request->ESPB,
+        ]);
+
+        return response()->json(['Predmet je sacuvan', new PredmetResource($predmet)]);
     }
 
     /**
@@ -88,6 +106,6 @@ class PredmetController extends Controller
      */
     public function destroy(Predmet $predmet)
     {
-        //
+        
     }
 }
