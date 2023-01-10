@@ -32,3 +32,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::get('/domaci/{id}',[DomaciController::class,'show']);
 
     Route::post('/register',[AuthController::class,'register']);
+    Route::post('/login',[AuthController::class,'login']);
