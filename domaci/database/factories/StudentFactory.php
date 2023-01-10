@@ -19,7 +19,7 @@ class StudentFactory extends Factory
         return [
             'ime'=>$this->faker->firstName(),
             'prezime'=>$this->faker->lastName(),
-            'indeks'=>$this->faker->regexify('[a-z]{2}.20[1-9]{2}\/[1-9]{4}'),
+            'broj_indeksa'=>$this->faker->regexify('[a-z]{2}.20[1-9]{2}\/[1-9]{4}'),
         ];
     }
 }
