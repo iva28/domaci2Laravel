@@ -95,7 +95,25 @@ class PredmetController extends Controller
      */
     public function update(Request $request, Predmet $predmet)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'naziv'=>'required|string',
+            'opis'=>'required|string',
+            'sef_katedre'=>'required|string',
+            'ESPB'=>'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json([$validator->errors()]);
+        }
+
+       $predmet->naziv = $request->naziv;
+       $predmet->opis = $request->opis;
+       $predmet->sef_katedre = $request->sef_katedre;
+       $predmet->ESPB = $request->ESPB;
+       $predmet->save();
+
+       return response()->json(['Predmet je update-ovan!',new PredmetResource($predmet)]);
+
     }
 
     /**
@@ -106,6 +124,7 @@ class PredmetController extends Controller
      */
     public function destroy(Predmet $predmet)
     {
-        
+        $predmet->delete();
+        return response()->json(['Predmet je obrisan']);
     }
 }
