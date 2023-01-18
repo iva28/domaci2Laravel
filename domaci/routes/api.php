@@ -21,7 +21,7 @@ use App\Http\Controllers\Api\AuthController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+Route::get('/students',[StudentController::class,'index']);
 
 Route::group(['middleware'=>['auth:sanctum']], function() {
     Route::resource('predmet',PredmetController::class);
@@ -38,3 +38,6 @@ Route::group(['middleware'=>['auth:sanctum']], function() {
 
     Route::post('/register',[AuthController::class,'register']);
     Route::post('/login',[AuthController::class,'login']);
+
+    
+   Route::get('/predmets',[PredmetController::class,'index']);
